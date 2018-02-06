@@ -1,0 +1,2 @@
+A single header C library containing branchless functions.
+Source and explanation available at: http://graphics.stanford.edu/~seander/bithacks.html

@@ -2,46 +2,58 @@
 #define BRANCHLESS_IMPLEMENTATION
 #include "../branchless.h"
 
-void TestAbsInt(CuTest *tc) {
-    CuAssertIntEquals(tc, 42, abs_int(42));
-    CuAssertIntEquals(tc, 42, abs_int(-42));
+void TestAbsInt32(CuTest *tc) {
+    CuAssertIntEquals(tc, 42, abs_int32(42));
+    CuAssertIntEquals(tc, 42, abs_int32(-42));
 }
 
-void TestAbsLong(CuTest *tc) {
-    CuAssertLongEquals(tc, 42, abs_long(42));
-    CuAssertLongEquals(tc, 42, abs_long(-42));
+void TestAbsInt64(CuTest *tc) {
+    CuAssertLongLongEquals(tc, 42, abs_int64(42));
+    CuAssertLongLongEquals(tc, 42, abs_int64(-42));
 }
 
-void TestOppositeSignInt(CuTest *tc) {
-    CuAssertFalse(tc, opposite_sign_int(42, 42));
-    CuAssertTrue(tc, opposite_sign_int(-42, 42));
-    CuAssertFalse(tc, opposite_sign_int(-42, -42));
+void TestOppositeSignInt32(CuTest *tc) {
+    CuAssertFalse(tc, opposite_sign_int32(42, 42));
+    CuAssertTrue(tc, opposite_sign_int32(-42, 42));
+    CuAssertFalse(tc, opposite_sign_int32(-42, -42));
 }
 
-void TestOppositeSignLong(CuTest *tc) {
-    CuAssertFalse(tc, opposite_sign_long(42, 42));
-    CuAssertTrue(tc, opposite_sign_long(-42, 42));
-    CuAssertFalse(tc, opposite_sign_long(-42, -42));
+void TestOppositeSignInt64(CuTest *tc) {
+    CuAssertFalse(tc, opposite_sign_int64(42, 42));
+    CuAssertTrue(tc, opposite_sign_int64(-42, 42));
+    CuAssertFalse(tc, opposite_sign_int64(-42, -42));
 }
 
-void TestMinInt(CuTest *tc) {
-    CuAssertIntEquals(tc,  42, min_int(42, 43));
-    CuAssertIntEquals(tc, -42, min_int(-42, 42));
+void TestMinInt32(CuTest *tc) {
+    CuAssertIntEquals(tc,  42, min_int32(42, 43));
+    CuAssertIntEquals(tc, -42, min_int32(-42, 42));
 }
 
-void TestMaxInt(CuTest *tc) {
-    CuAssertIntEquals(tc, 42, max_int(42, 41));
-    CuAssertIntEquals(tc, 42, max_int(-42, 42));
+void TestMaxInt32(CuTest *tc) {
+    CuAssertIntEquals(tc, 42, max_int32(42, 41));
+    CuAssertIntEquals(tc, 42, max_int32(-42, 42));
 }
 
-void TestMinLong(CuTest *tc) {
-    CuAssertLongEquals(tc,  42, min_long(42, 43));
-    CuAssertLongEquals(tc, -42, min_long(-42, 42));
+void TestMinInt64(CuTest *tc) {
+    CuAssertLongLongEquals(tc,  42, min_int64(42, 43));
+    CuAssertLongLongEquals(tc, -42, min_int64(-42, 42));
 }
 
-void TestMaxLong(CuTest *tc) {
-    CuAssertLongEquals(tc, 42, max_long(42, 41));
-    CuAssertLongEquals(tc, 42, max_long(-42, 42));
+void TestMaxInt64(CuTest *tc) {
+    CuAssertLongLongEquals(tc, 42, max_int64(42, 41));
+    CuAssertLongLongEquals(tc, 42, max_int64(-42, 42));
+}
+
+void TestCountBitsInt32(CuTest *tc) {
+    CuAssertIntEquals(tc, 16, count_bits_int32(0x55555555)); // 01010101 01010101 01010101 01010101
+    CuAssertIntEquals(tc, 20, count_bits_int32(0xFFF000FF)); // 11111111 11110000 00000000 11111111
+    CuAssertIntEquals(tc,  8, count_bits_int32(0x00000FF0)); // 00000000 00000000 00001111 11110000
+}
+
+void TestCountBitsInt64(CuTest *tc) {
+    CuAssertLongLongEquals(tc, 32, count_bits_int64(0x5555555555555555)); // 01010101 01010101 01010101 01010101 01010101 01010101 01010101 01010101
+    CuAssertLongLongEquals(tc, 36, count_bits_int64(0xFFF000FFF000FFF0)); // 11111111 11110000 00000000 11111111 11110000 00000000 11111111 11110000
+    CuAssertLongLongEquals(tc, 16, count_bits_int64(0x00000FF000000FF0)); // 00000000 00000000 00001111 11110000 00000000 00000000 00001111 11110000
 }
 
 /*-------------------------------------------------------------------------*
@@ -51,17 +63,20 @@ void TestMaxLong(CuTest *tc) {
 CuSuite* CuGetSuite(void) {
     CuSuite *suite = CuSuiteNew();
 
-    SUITE_ADD_TEST(suite, TestAbsInt);
-    SUITE_ADD_TEST(suite, TestAbsLong);
+    SUITE_ADD_TEST(suite, TestAbsInt32);
+    SUITE_ADD_TEST(suite, TestAbsInt64);
 
-    SUITE_ADD_TEST(suite, TestOppositeSignInt);
-    SUITE_ADD_TEST(suite, TestOppositeSignLong);
+    SUITE_ADD_TEST(suite, TestOppositeSignInt32);
+    SUITE_ADD_TEST(suite, TestOppositeSignInt64);
 
-    SUITE_ADD_TEST(suite, TestMinInt);
-    SUITE_ADD_TEST(suite, TestMaxInt);
+    SUITE_ADD_TEST(suite, TestMinInt32);
+    SUITE_ADD_TEST(suite, TestMaxInt32);
 
-    SUITE_ADD_TEST(suite, TestMinLong);
-    SUITE_ADD_TEST(suite, TestMaxLong);
+    SUITE_ADD_TEST(suite, TestMinInt64);
+    SUITE_ADD_TEST(suite, TestMaxInt64);
+
+    SUITE_ADD_TEST(suite, TestCountBitsInt32);
+    SUITE_ADD_TEST(suite, TestCountBitsInt64);
 
     return suite;
 }

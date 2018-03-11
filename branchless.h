@@ -11,7 +11,7 @@
  * @return 1 for positive number or zero, 0 for negative
  * @link http://www.coranac.com/documents/bittrick/#ssec-math-sign2
  */
-int32_t positive_sign(int32_t);
+int32_t positive_sign(int32_t x);
 
 /**
  * gets the sign of the number
@@ -20,7 +20,7 @@ int32_t positive_sign(int32_t);
  * @return 0 for positive number or zero, -1 for negative
  * @link http://www.coranac.com/documents/bittrick/#ssec-math-sign2
  */
-int32_t negative_sign(int32_t);
+int32_t negative_sign(int32_t x);
 
 /**
  * gets the sign of the number
@@ -29,7 +29,7 @@ int32_t negative_sign(int32_t);
  * @return 1 for positive number or zero, -1 for negative
  * @link http://www.coranac.com/documents/bittrick/#ssec-math-sign2
  */
-int32_t sign_sign(int32_t);
+int32_t sign_sign(int32_t x);
 
 /**
  * gets the sign of the number
@@ -38,7 +38,17 @@ int32_t sign_sign(int32_t);
  * @return 1 for positive number, -1 for negative and 0 for zero
  * @link http://www.coranac.com/documents/bittrick/#ssec-math-sign3
  */
-int32_t sign_sign_zero(int32_t);
+int32_t sign_sign_zero(int32_t x);
+
+/**
+ * checks if the value is a power of 2
+ *
+ * @param x value to check
+ * @return true if value is a power of 2, false otherwise
+ * @link http://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2
+ */
+bool is_power_of_2_int32(int32_t x);
+bool is_power_of_2_int64(int64_t x);
 
  /**
   * checks whether provided values have different signs
@@ -93,6 +103,14 @@ inline int32_t sign_sign(int32_t x) {
 
 inline int32_t sign_sign_zero(int32_t x) {
     return (x >> 31) - (-x >> 31);
+}
+
+inline bool is_power_of_2_int32(int32_t x) {
+    return x && !(x & (x - 1));
+}
+
+inline bool is_power_of_2_int64(int64_t x) {
+    return x && !(x & (x - 1));
 }
 
 inline int32_t abs_int32(int32_t x) {

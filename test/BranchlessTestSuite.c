@@ -20,6 +20,19 @@ void TestSign3Way(CuTest *tc) {
     CuAssertIntEquals(tc, 0, sign_sign_zero(0));
 }
 
+void TestIsPowerOf2(CuTest *tc) {
+    CuAssertFalse(tc, is_power_of_2_int32(0));
+    CuAssertTrue(tc, is_power_of_2_int32(1));
+    CuAssertTrue(tc, is_power_of_2_int32(2));
+    CuAssertFalse(tc, is_power_of_2_int32(42));
+    CuAssertTrue(tc, is_power_of_2_int32(256));
+    CuAssertFalse(tc, is_power_of_2_int64(0));
+    CuAssertTrue(tc, is_power_of_2_int64(1));
+    CuAssertTrue(tc, is_power_of_2_int64(2));
+    CuAssertFalse(tc, is_power_of_2_int64(42));
+    CuAssertTrue(tc, is_power_of_2_int64(((int64_t) 1) << 42));
+}
+
 void TestAbsInt32(CuTest *tc) {
     CuAssertIntEquals(tc, 42, abs_int32(42));
     CuAssertIntEquals(tc, 42, abs_int32(-42));
@@ -83,6 +96,8 @@ CuSuite* CuGetSuite(void) {
 
     SUITE_ADD_TEST(suite, TestSign2Way);
     SUITE_ADD_TEST(suite, TestSign3Way);
+
+    SUITE_ADD_TEST(suite, TestIsPowerOf2);
 
     SUITE_ADD_TEST(suite, TestAbsInt32);
     SUITE_ADD_TEST(suite, TestAbsInt64);

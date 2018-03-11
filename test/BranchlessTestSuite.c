@@ -2,6 +2,24 @@
 #define BRANCHLESS_IMPLEMENTATION
 #include "../branchless.h"
 
+void TestSign2Way(CuTest *tc) {
+    CuAssertIntEquals(tc, 1, positive_sign(42));
+    CuAssertIntEquals(tc, 1, positive_sign(0));
+    CuAssertIntEquals(tc, 0, positive_sign(-42));
+    CuAssertIntEquals(tc, 0, negative_sign(42));
+    CuAssertIntEquals(tc, 0, negative_sign(0));
+    CuAssertIntEquals(tc, -1, negative_sign(-42));
+    CuAssertIntEquals(tc, 1, sign_sign(42));
+    CuAssertIntEquals(tc, 1, sign_sign(0));
+    CuAssertIntEquals(tc, -1, sign_sign(-42));
+}
+
+void TestSign3Way(CuTest *tc) {
+    CuAssertIntEquals(tc, 1, sign_sign_zero(42));
+    CuAssertIntEquals(tc, -1, sign_sign_zero(-42));
+    CuAssertIntEquals(tc, 0, sign_sign_zero(0));
+}
+
 void TestAbsInt32(CuTest *tc) {
     CuAssertIntEquals(tc, 42, abs_int32(42));
     CuAssertIntEquals(tc, 42, abs_int32(-42));
@@ -62,6 +80,9 @@ void TestCountBitsInt64(CuTest *tc) {
 
 CuSuite* CuGetSuite(void) {
     CuSuite *suite = CuSuiteNew();
+
+    SUITE_ADD_TEST(suite, TestSign2Way);
+    SUITE_ADD_TEST(suite, TestSign3Way);
 
     SUITE_ADD_TEST(suite, TestAbsInt32);
     SUITE_ADD_TEST(suite, TestAbsInt64);
